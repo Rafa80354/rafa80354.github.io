@@ -1,0 +1,48 @@
+
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>منصة وصل — نموذج أولي (الرياض)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-900" style="font-family: system-ui, 'Noto Kufi Arabic', Tahoma, Arial;">
+  <div id="root"></div>
+
+  <script type="text/javascript">
+    const { useMemo, useState } = React;
+    const AGENCIES = [
+      { id: "r1", name: "مهارة للموارد البشرية (Maharah)", rating: 4.6, verified: true },
+      { id: "r2", name: "سماسكو (SMASCO)", rating: 4.4, verified: true },
+      { id: "r3", name: "إمداد للموارد البشرية", rating: 4.1, verified: true },
+      { id: "r4", name: "اليمامة للاستقدام", rating: 4.0, verified: true },
+      { id: "r5", name: "نجد ووركفورس", rating: 3.9, verified: false }
+    ];
+    const OFFERS = [
+      { id: "o1", agencyId: "r1", role: "عاملة منزلية", country: "الفلبين", fee: 17500, eta: 45 },
+      { id: "o2", agencyId: "r2", role: "عاملة منزلية", country: "إندونيسيا", fee: 16900, eta: 40 },
+      { id: "o3", agencyId: "r3", role: "سائق", country: "الهند", fee: 14900, eta: 35 }
+    ];
+    const currency = (n) => new Intl.NumberFormat("ar-SA",{style:"currency",currency:"SAR"}).format(n);
+    function App(){
+      return React.createElement('div',{className:"max-w-2xl mx-auto p-6"},
+        React.createElement('h1',{className:"text-2xl font-bold mb-6 text-teal-700"},"منصة وصل — عروض الرياض (تجريبي)"),
+        OFFERS.map(o=>{
+          const agency = AGENCIES.find(a=>a.id===o.agencyId);
+          return React.createElement('div',{key:o.id,className:"bg-white rounded-2xl shadow p-4 mb-4"},
+            React.createElement('div',{className:"font-bold text-lg mb-1"},agency?.name),
+            React.createElement('div',null,o.role+" • "+o.country),
+            React.createElement('div',{className:"mt-1"},"الرسوم: "+currency(o.fee)+" — المدة: "+o.eta+" يوم"),
+            React.createElement('button',{onClick:()=>alert("بدء التعاقد مع "+agency?.name),className:"mt-3 px-3 py-1 rounded bg-teal-700 text-white"},"بدء التعاقد")
+          );
+        })
+      );
+    }
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(React.createElement(App));
+  </script>
+</body>
+</html>
